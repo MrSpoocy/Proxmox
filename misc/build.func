@@ -439,13 +439,16 @@ install_script() {
   fi
   NEXTID=$(pvesh get /cluster/nextid)
   timezone=$(cat /etc/timezone)
+
   # https://stackoverflow.com/a/14203146
   POSITIONAL_ARGS=()
-  echo "Args $@"
+  echo -e "Args $@ \n"
+  exit
+
   while [[ $# -gt 0 ]]; do
       case "$1" in
       --id) if [[ $2 -gt 0 ]]; then
-            echo "DEBUG: Parse ID: $2"
+            echo -e "DEBUG: Parse ID: $2\n"
             NEXTID=$2
             shift # past argument
             shift # past value
