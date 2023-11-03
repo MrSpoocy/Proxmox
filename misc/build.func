@@ -439,6 +439,30 @@ install_script() {
   fi
   NEXTID=$(pvesh get /cluster/nextid)
   timezone=$(cat /etc/timezone)
+  # https://stackoverflow.com/a/14203146
+  POSITIONAL_ARGS=()
+  echo "Args $@"
+  while [[ $# -gt 0 ]]; do
+      case "$1" in
+      --id) if [[ $2 -gt 0 ]]; then
+            echo "DEBUG: Parse ID: $2"
+            NEXTID=$2
+            shift # past argument
+            shift # past value
+          else
+              echo "--id requires a number" 1>&2; exit 1
+          fi ;;
+      -*|--*)
+        echo "Unknown option $1"
+        exit 1
+        ;;
+      *)
+        POSITIONAL_ARGS+=("$1") # save positional arg
+        shift # past argument
+        ;;
+      esac
+  done
+
   header_info
   if (whiptail --backtitle "Proxmox VE Helper Scripts" --title "SETTINGS" --yesno "Use Default Settings?" --no-button Advanced 10 58); then
     header_info
