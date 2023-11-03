@@ -442,7 +442,7 @@ install_script() {
 
   # https://stackoverflow.com/a/14203146
   POSITIONAL_ARGS=()
-  echo -e "Args $@ \n"
+  echo -e "Args $@ 1: $1 2: $2 3: $3\n"
   exit
 
   while [[ $# -gt 0 ]]; do
